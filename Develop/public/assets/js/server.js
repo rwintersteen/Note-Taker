@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -10,6 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
+
+app.get("/", function(req, res) {
+    res.json(path.join(__dirname, "public/index.html"));
+});
 
 // Returns the notes.html file using /notes
 app.get("/notes", (req, res) => {
@@ -39,7 +43,6 @@ app.post("/api/notes", (req, res) => {
     try {
         notesData = fs.readFileSync("./Develop/db/db.json", "utf8");
         console.log(notesData);
-
         notesData = JSON.parse(notesData);
         req.body.id = notesData.length;
         notesData.push(req.body); 
