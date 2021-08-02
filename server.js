@@ -14,17 +14,17 @@ app.use(express.static('public'));
 
 // Returns the notes.html file using /notes
 app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "./public/notes.html"));
+    res.sendFile(path.join(__dirname, "./Develop/public/notes.html"));
 });
 
 // All other routes returns the index.html file
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./public/index.html"));
+    res.sendFile(path.join(__dirname, "./Develop/public/index.html"));
 });
 
 
 app.post("/api/notes", (req, res) => {
-    fs.readFile(path.join(__dirname, "./db/db.json"), "utf8", (err, data) => {
+    fs.readFile(path.join(__dirname, "./Develop/db/db.json"), "utf8", (err, data) => {
         if (err) throw err;
         const db = JSON.parse(data);
         const newDB = [];
@@ -40,7 +40,7 @@ app.post("/api/notes", (req, res) => {
             newDB.push(newNote);
         }
 
-        fs.writeFile(path.join(__dirname, "./db/db.json"), JSON.stringify(newDB, null, 2), (err) => {
+        fs.writeFile(path.join(__dirname, "./Develop/db/db.json"), JSON.stringify(newDB, null, 2), (err) => {
             if (err) throw err;
             res.json(req.body);
         });
