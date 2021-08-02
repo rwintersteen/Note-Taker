@@ -18,13 +18,13 @@ app.get("/notes", (req, res) => {
 });
 
 // All other routes returns the index.html file
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 
 app.post("/api/notes", (req, res) => {
-    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
+    fs.readFile(path.join(__dirname, "./db/db.json"), "utf8", (err, data) => {
         if (err) throw err;
         const db = JSON.parse(data);
         const newDB = [];
@@ -40,11 +40,16 @@ app.post("/api/notes", (req, res) => {
             newDB.push(newNote);
         }
 
-        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(newDB, null, 2), (err) => {
+        fs.writeFile(path.join(__dirname, "./db/db.json"), JSON.stringify(newDB, null, 2), (err) => {
             if (err) throw err;
             res.json(req.body);
         });
     });
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    deleteNote(req.params.id, allNotes);
+    res.json(true);
 });
 
 app.listen(PORT, () => {
