@@ -3,7 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const app = express();
 
-const PORT = process.env.PORT || 3001;
+
+const PORT = process.env.PORT || 3005;
 
 
 // Middleware
@@ -21,7 +22,7 @@ app.get("/notes", (req, res) => {
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "./Develop/public/index.html"));
 });
-
+7
 
 app.post("/api/notes", (req, res) => {
     fs.readFile(path.join(__dirname, "./Develop/db/db.json"), "utf8", (err, data) => {
