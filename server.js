@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-
+let allNotes = require('./Develop/db/db.json');
 
 const PORT = process.env.PORT || 3005;
 
@@ -12,25 +12,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+// All other routes returns the index.html file
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
 // Returns the notes.html file using /notes
 app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "./Develop/public/notes.html"));
+    res.sendFile(path.join(__dirname, "public/notes.html"));
 });
-
-// All other routes returns the index.html file
-app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./Develop/public/index.html"));
-});
-7
 
 // GET request from db.json
-app.get("/api/notes", function (req, res) {
-    fs.readFile(__dirname + "./Develop/db/db.json", 'utf8', function (error, data) {
-        if (err) throw err;
-        res.json(JSON.parse(data))
-    })
-});
+app.get("/api/notes", (req, res) => {
+    res.json(JSON.parse(data))
+})
 
 // POST to db.json
 app.post("/api/notes", (req, res) => {
