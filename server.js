@@ -24,6 +24,18 @@ app.get("/*", (req, res) => {
 });
 7
 
+// GET request from db.json
+app.get("/api/notes", function (req, res) {
+    fs.readFile(__dirname + "./Develop/db/db.json", 'utf8', function (error, data) {
+      if (error) {
+        return console.log(error)
+      }
+      console.log("This is Notes", data)
+      res.json(JSON.parse(data))
+    })
+  });
+
+// POST to db.json
 app.post("/api/notes", (req, res) => {
     fs.readFile(path.join(__dirname, "./Develop/db/db.json"), "utf8", (err, data) => {
         if (err) throw err;
@@ -48,10 +60,20 @@ app.post("/api/notes", (req, res) => {
     });
 });
 
-app.delete('/api/notes/:id', (req, res) => {
-    deleteNote(req.params.id, allNotes);
-    res.json(true);
-});
+app.delete("/api/notes/:id", function (req, res) {
+    const noteId = JSON.parse(req.params.id)
+    console.log(noteId)
+    fs.readFile(__dirname + "./Develop/db/db.json", 'utf8', function (error, notes) {
+      if (err) throw err;
+      notes = JSON.parse(notes)
+      notes = notes.filter(val => val.id !== noteId)
+  
+      fs.writeFile(__dirname + "./Develop/db/db.json", JSON.stringify(notes), function (error, data) {
+        if (err) throw err;
+        res.json(notes)
+      })
+    })
+  })
 
 app.listen(PORT, () => {
     console.log(`Server listening on: http://localhost:${PORT}`);
