@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const app = express();
 let allNotes = require('./db/db.json');
+console.log(allNotes);
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,27 +25,27 @@ app.get("/notes", (req, res) => {
 
 // GET request from db.json
 app.get("/api/notes", (req, res) => {
-    res.json(JSON.parse(allNotes))
+    res.json(allNotes)
 })
 
 // POST to db.json
 app.post("/api/notes", (req, res) => {
     const newNote = req.body 
-    newNote.id= notes.length
-    notes.push(newNote) 
-    fs.writeFileSync("./db/db.json", JSON.stringify(notes)) 
+    newNote.id= allNotes.length
+    allNotes.push(newNote) 
+    fs.writeFileSync("./db/db.json", JSON.stringify(allNotes)) 
     res.status(201).end()
-    return res.json(notes)
+    return res.json(allNotes)
 });
 
 // DELETE from db.json
 app.delete("/api/notes/:id", function (req, res) {
     const id = req.params.id
     console.log(id)
-    const filteredNotes = notes.filter((note) => note.id !== parseInt(id)) 
+    const filteredNotes = allNotes.filter((note) => note.id !== parseInt(id)) 
     console.log(filteredNotes)
     fs.writeFileSync("./db/db.json", JSON.stringify(filteredNotes)) 
-    notes = filteredNotes
+    allNotes = filteredNotes
     return res.json({ok: true})
 })
 
