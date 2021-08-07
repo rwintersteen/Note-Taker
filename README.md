@@ -6,7 +6,7 @@ A note taking app that can be used to write and save notes. This application use
 
 ## Table of Contents 
 
-Video Preview:
+
 ![Note Taker](https://user-images.githubusercontent.com/81829048/128615579-ef73e8b0-6ca1-4c43-881e-369a3a817617.gif)
 
 
