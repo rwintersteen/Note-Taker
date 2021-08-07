@@ -5,11 +5,11 @@ A note taking app that can be used to write and save notes. This application use
 
 ## Table of Contents 
 
-License:
-N/A
+Video Preview:
+https://drive.google.com/file/d/1X4zRD0W3SVCZI0b8XXSUz9ie_taWTHiC/view?usp=sharing
 
-Tests:
-No
+Deployment using Heroku:
+https://salty-garden-57347.herokuapp.com/
 
 Usage:
 A user is taken to a landing page and is presented with a link to a notes page. Once taken to the notes page, the user is able to write notes with a specific title and has the ability to save the note after clicking the save icon. The user also has the ability to delete notes.
